@@ -99,8 +99,12 @@ function App() {
         </select>
 
         <textarea
-          rows="12"
-          className="border p-3 rounded w-full mb-4"
+  rows="12"
+  className={`border p-3 rounded w-full mb-4 ${
+    darkMode
+      ? "bg-gray-700 text-white border-gray-600"
+      : "bg-white text-black"
+  }`}
           placeholder="Paste code here..."
           value={code}
           onChange={(e) => setCode(e.target.value)}
@@ -122,21 +126,29 @@ function App() {
         </button>
 
         {loading && (
-          <div className="mt-4 flex items-center gap-2">
-            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-black"></div>
-            <span>Analyzing code...</span>
-          </div>
-        )}
+  <div className="mt-4 flex items-center gap-2">
+    <div className="animate-spin rounded-full h-5 w-5 border-2 border-gray-500 border-t-blue-500"></div>
+    <span>Analyzing code...</span>
+  </div>
+)}
 
         {review && (
-          <div className="mt-6 bg-gray-50 p-4 rounded">
-            <h2 className="font-bold mb-2">AI Review</h2>
+  <div
+    className={`mt-6 p-4 rounded ${
+      darkMode
+        ? "bg-gray-700 text-white"
+        : "bg-gray-50 text-black"
+    }`}
+  >
+    <h2 className="font-bold mb-2">
+      AI Review
+    </h2>
 
-            <pre className="whitespace-pre-wrap">
-              {review}
-            </pre>
-          </div>
-        )}
+    <pre className="whitespace-pre-wrap max-h-80 overflow-y-auto border rounded p-3">
+      {review}
+    </pre>
+  </div>
+)}
 
         <div className="mt-8">
   <h2 className="text-xl font-bold mb-4">
@@ -150,33 +162,43 @@ function App() {
   )}
 
   {reviews.map((item) => (
-            <div
-              key={item.id}
-              className="border rounded p-3 mb-2 cursor-pointer hover:bg-gray-100"
-              onClick={() => setSelectedReview(item)}
-            >
-              <strong>{item.language}</strong>
-              <p>Review #{item.id}</p>
-            </div>
-          ))}
+  <div
+    key={item.id}
+    className={`border rounded p-3 mb-2 cursor-pointer ${
+      darkMode
+        ? "hover:bg-gray-700"
+        : "hover:bg-gray-100"
+    }`}
+    onClick={() => setSelectedReview(item)}
+  >
+    <strong>{item.language}</strong>
+    <p>Review #{item.id}</p>
+  </div>
+))}
         </div>
 
         {selectedReview && (
-          <div className="mt-6 bg-blue-50 p-4 rounded">
-            <h2 className="font-bold mb-2">
-              Review #{selectedReview.id}
-            </h2>
+  <div
+    className={`mt-6 p-4 rounded ${
+      darkMode
+        ? "bg-blue-900/30 text-white"
+        : "bg-blue-50 text-black"
+    }`}
+  >
+    <h2 className="font-bold mb-2">
+      Review #{selectedReview.id}
+    </h2>
 
-            <p>
-              <strong>Language:</strong>{" "}
-              {selectedReview.language}
-            </p>
+    <p>
+      <strong>Language:</strong>{" "}
+      {selectedReview.language}
+    </p>
 
-            <pre className="whitespace-pre-wrap mt-3">
-              {selectedReview.review}
-            </pre>
-          </div>
-        )}
+    <pre className="whitespace-pre-wrap mt-3">
+      {selectedReview.review}
+    </pre>
+  </div>
+)}
       </div>
     </div>
   );
